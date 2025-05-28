@@ -4,29 +4,29 @@ const eventSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Event name is required'],
-    trim: true
+    trim: true,
   },
   location: {
     type: String,
     required: [true, 'Event location is required'],
-    trim: true
+    trim: true,
   },
   description: {
     type: String,
     required: [true, 'Event description is required'],
-    trim: true
+    trim: true,
   },
   dateTime: {
     type: Date,
-    required: [true, 'Event date and time is required']
+    required: [true, 'Event date and time is required'],
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
-  }
+    required: true,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 // Index for efficient querying
@@ -36,4 +36,4 @@ eventSchema.index({ name: 'text' });
 
 const Event = mongoose.model('Event', eventSchema);
 
-module.exports = Event; 
+module.exports = Event;

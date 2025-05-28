@@ -1,5 +1,5 @@
-const Event = require("../Models/Event");
-const User = require("../Models/User");
+const Event = require('../Models/Event');
+const User = require('../Models/User');
 
 exports.getEvents = async (req, res) => {
   try {
@@ -11,12 +11,12 @@ exports.getEvents = async (req, res) => {
 };
 
 exports.addEvent = async (req, res) => {
-  const userToken = req.headers.authorization.split(" ")[1];
+  const userToken = req.headers.authorization.split(' ')[1];
 
   console.log(userToken);
 
   if (!userToken) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   const userInDB = await User.findOne({ token: userToken });
@@ -24,7 +24,7 @@ exports.addEvent = async (req, res) => {
   console.log(userInDB);
 
   if (!userInDB) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   const event = new Event({
