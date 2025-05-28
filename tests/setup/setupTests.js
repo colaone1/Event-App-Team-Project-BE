@@ -35,7 +35,12 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  // No need to close real database connection
+  // Clean up any remaining connections
+  if (mongoose.connection.readyState !== 0) {
+    await mongoose.connection.close();
+  }
+  // Clear all mocks
+  jest.clearAllMocks();
 });
 
 // Add any global test utilities here

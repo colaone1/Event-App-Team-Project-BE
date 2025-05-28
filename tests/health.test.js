@@ -12,8 +12,22 @@ describe('Health Check', () => {
 
   afterAll((done) => {
     if (server) {
-      server.close(() => {
-        done();
+      // Close all connections
+      server.getConnections((err, count) => {
+        if (err) {
+          done(err);
+          return;
+        }
+        
+        if (count === 0) {
+          server.close(done);
+          return;
+        }
+
+        // Force close all connections
+        server.close(() => {
+          done();
+        });
       });
     } else {
       done();
