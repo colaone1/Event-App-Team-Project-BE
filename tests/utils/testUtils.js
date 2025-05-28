@@ -23,6 +23,14 @@ const closeTestDB = async () => {
   await mongoose.connection.close();
 };
 
+const generateTestEvent = () => ({
+  title: 'Test Event',
+  description: 'This is a test event description that is long enough to test the max length rule',
+  date: new Date(),
+  location: 'Test Location',
+  // ... existing code ...
+});
+
 module.exports = {
   connectTestDB,
   clearTestDB,

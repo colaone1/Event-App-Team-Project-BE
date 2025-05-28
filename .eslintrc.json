@@ -16,7 +16,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "no-console": "warn",
+    "no-console": ["warn", { "allow": ["log", "warn", "error"] }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "eol-last": ["error", "always"],
@@ -26,5 +26,13 @@
     "array-bracket-spacing": ["error", "never"],
     "arrow-parens": ["error", "always"],
     "max-len": ["error", { "code": 100 }]
-  }
+  },
+  "overrides": [
+    {
+      "files": ["config/*.js", "index.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 } 
