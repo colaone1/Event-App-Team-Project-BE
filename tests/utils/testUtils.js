@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 // Helper to connect to test database
 const connectTestDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI_TEST || 'mongodb://localhost:27017/events-app-test');
+    await mongoose.connect(
+      process.env.MONGODB_URI_TEST || 'mongodb://localhost:27017/events-app-test',
+    );
   } catch (error) {
     console.error('Test database connection error:', error);
     throw error;
@@ -35,4 +37,5 @@ module.exports = {
   connectTestDB,
   clearTestDB,
   closeTestDB,
+  generateTestEvent,
 };
