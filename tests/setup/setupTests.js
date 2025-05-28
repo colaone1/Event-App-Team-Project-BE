@@ -19,13 +19,13 @@ jest.mock('mongoose', () => {
     connect: jest.fn().mockResolvedValue({
       connection: {
         host: 'test-db',
-        close: jest.fn().mockResolvedValue(undefined)
-      }
+        close: jest.fn().mockResolvedValue(undefined),
+      },
     }),
     connection: {
       readyState: 1,
-      close: jest.fn().mockResolvedValue(undefined)
-    }
+      close: jest.fn().mockResolvedValue(undefined),
+    },
   };
 });
 
@@ -48,4 +48,4 @@ afterAll(async () => {
 // Add any global test utilities here
 global.testUtils = {
   // Add your test utilities here
-}; 
+};

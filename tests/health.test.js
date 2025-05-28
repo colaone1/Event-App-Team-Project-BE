@@ -28,4 +28,4 @@ describe('Health Check', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('status', 'ok');
   });
-}); 
+});
