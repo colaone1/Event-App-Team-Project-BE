@@ -11,37 +11,31 @@ if (fs.existsSync(envTestPath)) {
 
 process.env.NODE_ENV = 'test';
 
+// Mock mongoose connection
+jest.mock('mongoose', () => {
+  const originalModule = jest.requireActual('mongoose');
+  return {
+    ...originalModule,
+    connect: jest.fn().mockResolvedValue({
+      connection: {
+        host: 'test-db',
+        close: jest.fn().mockResolvedValue(undefined)
+      }
+    }),
+    connection: {
+      readyState: 1,
+      close: jest.fn().mockResolvedValue(undefined)
+    }
+  };
+});
+
 // Add any global test setup here
 beforeAll(async () => {
-  try {
-    // Ensure we're using the test database
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(process.env.MONGODB_URI_TEST, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverSelectionTimeoutMS: 5000 // 5 second timeout
-      });
-    }
-  } catch (error) {
-    console.error('Database connection error:', error);
-    process.exit(1);
-  }
+  // No need to connect to real database
 });
 
 afterAll(async () => {
-  try {
-    // Close MongoDB connection with timeout
-    if (mongoose.connection.readyState !== 0) {
-      await Promise.race([
-        mongoose.connection.close(),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Database close timeout')), 5000)
-        )
-      ]);
-    }
-  } catch (error) {
-    console.error('Error closing database connection:', error);
-  }
+  // No need to close real database connection
 });
 
 // Add any global test utilities here

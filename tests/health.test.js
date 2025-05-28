@@ -5,21 +5,14 @@ describe('Health Check', () => {
   let server;
 
   beforeAll((done) => {
-    server = app.listen(0, () => { // Use port 0 to get a random available port
+    server = app.listen(0, () => {
       done();
     });
   });
 
   afterAll((done) => {
     if (server) {
-      // Set a timeout for server close
-      const timeout = setTimeout(() => {
-        console.error('Server close timeout');
-        done();
-      }, 5000);
-
       server.close(() => {
-        clearTimeout(timeout);
         done();
       });
     } else {
