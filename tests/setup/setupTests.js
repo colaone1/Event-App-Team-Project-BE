@@ -41,6 +41,8 @@ afterAll(async () => {
   }
   // Clear all mocks
   jest.clearAllMocks();
+  // Force process to exit after tests
+  setTimeout(() => process.exit(0), 1000);
 });
 
 // Add any global test utilities here
