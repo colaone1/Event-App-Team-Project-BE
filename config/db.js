@@ -2,7 +2,16 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI, {
+        // Use test database URI when running tests
+        const mongoURI = process.env.NODE_ENV === 'test' 
+            ? process.env.MONGODB_URI_TEST 
+            : process.env.MONGODB_URI;
+
+        if (!mongoURI) {
+            throw new Error('MongoDB URI is not defined in environment variables');
+        }
+
+        const conn = await mongoose.connect(mongoURI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
