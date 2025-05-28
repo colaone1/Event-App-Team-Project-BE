@@ -28,9 +28,11 @@ exports.addEvent = async (req, res) => {
   }
 
   const event = new Event({
-    title: req.body.title,
+    name: req.body.name,
     description: req.body.description,
-    price: req.body.price,
+    location: req.body.location,
+    date: req.body.date,
+    time: req.body.time,
     userId: userInDB._id,
   });
   try {
