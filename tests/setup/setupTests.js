@@ -13,19 +13,34 @@ process.env.NODE_ENV = 'test';
 
 // Add any global test setup here
 beforeAll(async () => {
-  // Ensure we're using the test database
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect(process.env.MONGODB_URI_TEST, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+  try {
+    // Ensure we're using the test database
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB_URI_TEST, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000 // 5 second timeout
+      });
+    }
+  } catch (error) {
+    console.error('Database connection error:', error);
+    process.exit(1);
   }
 });
 
 afterAll(async () => {
-  // Close MongoDB connection
-  if (mongoose.connection.readyState !== 0) {
-    await mongoose.connection.close();
+  try {
+    // Close MongoDB connection with timeout
+    if (mongoose.connection.readyState !== 0) {
+      await Promise.race([
+        mongoose.connection.close(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Database close timeout')), 5000)
+        )
+      ]);
+    }
+  } catch (error) {
+    console.error('Error closing database connection:', error);
   }
 });
 

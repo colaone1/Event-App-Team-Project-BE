@@ -12,7 +12,14 @@ describe('Health Check', () => {
 
   afterAll((done) => {
     if (server) {
+      // Set a timeout for server close
+      const timeout = setTimeout(() => {
+        console.error('Server close timeout');
+        done();
+      }, 5000);
+
       server.close(() => {
+        clearTimeout(timeout);
         done();
       });
     } else {
